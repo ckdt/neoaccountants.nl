@@ -1,0 +1,88 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "@fontsource/karla/latin-400.css";
+import "@fontsource/karla/latin-400-italic.css";
+import "@fontsource/poppins/latin-200.css";
+import "@fontsource/poppins/latin-700.css";
+import "@fontsource/space-mono/latin-400.css";
+import "../styles/global.scss";
+import SiteMeta from "../components/SiteMeta.astro";
+import ThemeScript from "../components/ThemeScript.astro";
+import PageProgress from "../components/PageProgress.astro";
+import { ui, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  noindex?: boolean;
+  alternates?: Partial<Record<Lang, string>>;
+}
+const { lang, title, description, noindex, alternates } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang} data-surface-top="paper" data-surface-top-end="paper" data-surface-middle="paper">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <ThemeScript />
+    <SiteMeta lang={lang} title={title} description={description} noindex={noindex} alternates={alternates} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#FAF9F6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1f24" media="(prefers-color-scheme: dark)" />
+    <ClientRouter />
+  </head>
+  <body>
+    <PageProgress />
+    <a class="skip-link visually-hidden" href="#main">{ui[lang].skip}</a>
+    <header class="site-header">
+      <slot name="header" />
+    </header>
+    <main id="main" tabindex="-1" data-page>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<script>
+  import "../lib/sections";
+</script>
+
+<style is:global>
+  /*
+    Kleur van vaste elementen volgt de sectie eronder (gezet door src/lib/sections.ts):
+    --ink-top (logo, links boven), --ink-top-end (hamburger, rechts boven), --ink-middle (desktopmenu).
+  */
+  :root {
+    --ink-top: var(--color-text);
+    --ink-top-end: var(--color-text);
+    --ink-middle: var(--color-text);
+    --progress-color: var(--brand-2);
+  }
+  :root[data-surface-top="dark"] { --ink-top: var(--ink-dark); }
+  :root[data-surface-top="light"] { --ink-top: var(--ink-light); }
+  :root[data-surface-top-end="dark"] { --ink-top-end: var(--ink-dark); }
+  :root[data-surface-top-end="light"] { --ink-top-end: var(--ink-light); }
+  :root[data-surface-middle="dark"] { --ink-middle: var(--ink-dark); }
+  :root[data-surface-middle="light"] { --ink-middle: var(--ink-light); }
+
+  /*
+    Desktop met genoeg hoogte: elke sectie klikt vast in beeld (zoals fullPage.js), maar met
+    native scroll-snap: toetsenbord, trackpad en scrollbalk blijven gewoon werken, en een
+    sectie die hoger is dan het venster kun je gewoon doorscrollen.
+    Mobiel en lage vensters: vrij scrollen, want daar zijn secties vaak hoger dan het scherm.
+  */
+  @media (min-width: 62em) and (min-height: 40em) {
+    html { scroll-snap-type: y mandatory; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  main:focus { outline: none; }
+  /* Koppen krijgen focus na een menuklik; alleen een ring bij toetsenbordgebruik. */
+  [tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
+</style>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { homePath, ui } from "../i18n/ui";
+---
+
+<BaseLayout lang="nl" title="404 — Neo" description={ui.nl.notFoundText} noindex>
+  <section class="not-found wrapper" data-section data-surface="paper">
+    <div class="flow">
+      <h1>404</h1>
+      <p>{ui.nl.notFoundTitle}. {ui.nl.notFoundText} <a href={homePath.nl}>{ui.nl.backHome}</a></p>
+      <p lang="en">{ui.en.notFoundTitle}. {ui.en.notFoundText} <a href={homePath.en}>{ui.en.backHome}</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found { min-block-size: 100svh; align-content: center; }
+  h1 { font-size: var(--step-5); }
+</style>

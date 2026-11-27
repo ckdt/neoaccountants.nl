@@ -1,0 +1,25 @@
+/*
+  Breakout-grid: content / popout / feature / full. Kinderen staan standaard in `content`.
+  Hier smal gehouden (--content-max), conform het oorspronkelijke ontwerp (40% breed op desktop).
+*/
+.wrapper {
+  --content-max: 38rem;
+  --popout: var(--space-l);
+  --feature: var(--space-2xl);
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [feature-start] minmax(0, var(--feature))
+    [popout-start] minmax(0, var(--popout))
+    [content-start] min(100% - var(--gutter) * 2, var(--content-max)) [content-end]
+    minmax(0, var(--popout)) [popout-end]
+    minmax(0, var(--feature)) [feature-end]
+    minmax(var(--gutter), 1fr) [full-end];
+}
+.wrapper > * { grid-column: content; }
+.wrapper > .popout { grid-column: popout; }
+.wrapper > .feature { grid-column: feature; }
+.wrapper > .full { grid-column: full; }
+
+/* Verticaal ritme */
+.flow > * + * { margin-block-start: var(--flow-space, 1em); }

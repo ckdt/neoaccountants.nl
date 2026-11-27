@@ -1,0 +1,28 @@
+/*
+  Light/dark mode die de systeemvoorkeur volgt (~/Code/_standards/snippets/theme.css).
+  - `color-scheme: light dark` + `light-dark(a, b)` kiest automatisch.
+  - Een eventuele keuze (data-theme op <html>) forceert het schema.
+  De dienstkleuren blijven in beide modi gelijk: dat zijn de merkkleuren.
+  Contrast tekst/achtergrond ≥ 4.5:1 (WCAG AA), zie settings.ts voor de dienstsecties.
+*/
+:root {
+  color-scheme: light dark;
+
+  --color-paper: light-dark(oklch(98.2% 0.004 91.4), oklch(21% 0.012 255)); /* #FAF9F6 */
+  --color-text: light-dark(oklch(41.4% 0.036 259.5), oklch(93% 0.008 91)); /* #404C5F */
+  --color-muted: light-dark(oklch(48% 0.03 259.5), oklch(78% 0.01 91));
+  --color-border: light-dark(oklch(41.4% 0.036 259.5 / 0.25), oklch(93% 0.008 91 / 0.3));
+  --color-focus: light-dark(oklch(45% 0.12 250), oklch(82% 0.1 204));
+
+  --ink-dark: oklch(31.2% 0.008 255.6); /* #2E3135 */
+  --ink-light: oklch(100% 0 0);
+  --menu-bg: oklch(31.2% 0.008 255.6);
+
+  /* Logo-verloop: teal → zalm → mint */
+  --brand-1: oklch(76.7% 0.083 204.4);
+  --brand-2: oklch(77.7% 0.108 38.6);
+  --brand-3: oklch(86% 0.05 160);
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }

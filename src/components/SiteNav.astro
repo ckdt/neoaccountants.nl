@@ -1,0 +1,205 @@
+---
+/*
+  Hoofdmenu. Mobiel: een popover (native: Esc en klik ernaast sluiten hem, focus en
+  aria-expanded regelt de browser). Desktop (≥ 62em): altijd zichtbaar, vast links.
+  Actief item (aria-current="location") en kleur volgen de sectie in beeld, zie sections.ts.
+*/
+import { homePath, languages, ui, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+  items: { anchor: string; title: string }[];
+}
+const { lang, items } = Astro.props;
+const t = ui[lang];
+---
+
+<button class="menu-toggle" type="button" popovertarget="site-nav" popovertargetaction="show">
+  <span class="menu-toggle__bars" aria-hidden="true"></span>
+  <span class="visually-hidden">{t.menu}</span>
+</button>
+
+<nav id="site-nav" class="site-nav" popover aria-label={t.nav}>
+  <button class="site-nav__close" type="button" popovertarget="site-nav" popovertargetaction="hide">
+    <span aria-hidden="true">×</span><span class="visually-hidden">{lang === "nl" ? "Menu sluiten" : "Close menu"}</span>
+  </button>
+  <ul role="list" class="site-nav__list">
+    {
+      items.map((item) => (
+        <li>
+          <a href={`#${item.anchor}`} data-nav-link={item.anchor}>
+            {item.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <ul role="list" class="site-nav__lang" aria-label={t.language}>
+    {
+      (Object.keys(languages) as Lang[]).map((l) => (
+        <li>
+          <a href={homePath[l]} hreflang={l} lang={l} aria-current={l === lang ? "page" : undefined}>
+            {l.toUpperCase()}
+            <span class="visually-hidden"> – {languages[l]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  /* ---------- Hamburger ---------- */
+  .menu-toggle {
+    position: fixed;
+    z-index: 20;
+    inset-block-start: var(--space-xs);
+    inset-inline-end: var(--space-xs);
+    display: grid;
+    place-items: center;
+    inline-size: 3rem;
+    block-size: 3rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink-top-end);
+    transition: color 0.3s ease;
+    cursor: pointer;
+  }
+  .menu-toggle__bars,
+  .menu-toggle__bars::before,
+  .menu-toggle__bars::after {
+    display: block;
+    inline-size: 1.75rem;
+    block-size: 3px;
+    border-radius: 3px;
+    background: currentColor;
+  }
+  .menu-toggle__bars { position: relative; }
+  .menu-toggle__bars::before,
+  .menu-toggle__bars::after { content: ""; position: absolute; inset-inline-start: 0; }
+  .menu-toggle__bars::before { inset-block-start: -8px; }
+  .menu-toggle__bars::after { inset-block-start: 8px; }
+
+  /* ---------- Paneel (mobiel) ---------- */
+  .site-nav {
+    /* reset van de UA-stijl voor [popover] */
+    margin: 0;
+    padding: var(--space-2xl) var(--space-m) var(--space-l);
+    border: 0;
+    inset: 0 auto 0 0;
+    inline-size: min(18rem, 85vw);
+    block-size: 100dvh;
+    max-block-size: none;
+    overflow-y: auto;
+    background: var(--menu-bg);
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .site-nav::backdrop { background: oklch(0% 0 0 / 0.6); }
+
+  .site-nav__close {
+    position: absolute;
+    inset-block-start: var(--space-xs);
+    inset-inline-end: var(--space-xs);
+    inline-size: 3rem;
+    block-size: 3rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: inherit;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .site-nav__list {
+    border-inline-start: 4px solid oklch(100% 0 0 / 0.2);
+    padding-inline-start: var(--space-s);
+  }
+  .site-nav__list li + li { margin-block-start: var(--space-2xs); }
+  .site-nav a {
+    display: inline-block;
+    padding-block: var(--space-3xs);
+    color: inherit;
+    text-decoration: none;
+  }
+  .site-nav a:hover { text-decoration: underline; }
+  .site-nav__list a[aria-current] { opacity: 0.6; }
+
+  .site-nav__lang {
+    display: flex;
+    gap: var(--space-xs);
+    margin-block-start: var(--space-l);
+    padding-inline-start: calc(var(--space-s) + 4px);
+  }
+  .site-nav__lang a {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    display: grid;
+    place-items: center;
+    padding: 0 var(--space-2xs);
+    border: 1px solid currentColor;
+    border-radius: var(--radius);
+    opacity: 0.75;
+  }
+  .site-nav__lang a[aria-current] { opacity: 1; border-width: 2px; font-weight: 700; }
+
+  /* Inschuiven van links; alleen als beweging mag. */
+  @media (prefers-reduced-motion: no-preference) {
+    .site-nav {
+      transition: translate 0.25s var(--ease-out), overlay 0.25s allow-discrete, display 0.25s allow-discrete;
+      translate: -100% 0;
+    }
+    .site-nav:popover-open { translate: 0 0; }
+    @starting-style {
+      .site-nav:popover-open { translate: -100% 0; }
+    }
+  }
+
+  /* ---------- Desktop: vaste lijst links in beeld ---------- */
+  @media (min-width: 62em) {
+    .menu-toggle,
+    .site-nav__close { display: none; }
+
+    .site-nav,
+    .site-nav:popover-open {
+      display: block;
+      position: fixed;
+      z-index: 15;
+      inset: 50% auto auto 4vw;
+      translate: 0 -50%;
+      inline-size: 13rem;
+      block-size: auto;
+      padding: 0;
+      overflow: visible;
+      background: none;
+      color: var(--ink-middle);
+      transition: color 0.3s ease;
+    }
+    .site-nav::backdrop { display: none; }
+    .site-nav__list {
+      border-inline-start: 0;
+      border-inline-end: 2px solid currentColor;
+      padding-inline: 0 var(--space-s);
+    }
+    .site-nav__list,
+    .site-nav__lang { border-color: color-mix(in oklch, currentColor 30%, transparent); }
+    .site-nav__lang { padding-inline-start: 0; margin-block-start: var(--space-m); }
+    .site-nav__lang a { min-inline-size: 2.75rem; min-block-size: 2rem; }
+  }
+</style>
+
+<script>
+  // Klikken op een anker (en het menu sluiten) regelt src/lib/sections.ts.
+  // Hier alleen: het mobiele menu dicht bij overgang naar desktop.
+  const desktop = matchMedia("(min-width: 62em)");
+  desktop.addEventListener("change", () => {
+    const nav = document.getElementById("site-nav");
+    if (desktop.matches && nav?.matches(":popover-open")) nav.hidePopover();
+  });
+</script>

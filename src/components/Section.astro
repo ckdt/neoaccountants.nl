@@ -1,0 +1,71 @@
+---
+/*
+  Eén schermvullende sectie. `surface`: paper (crème/donker thema) of een dienstkleur.
+  De schuine bovenrand (::before) valt over de vorige sectie heen, zoals in het oude ontwerp.
+*/
+import type { Ink } from "../data/settings";
+
+interface Props {
+  id: string;
+  surface: "paper" | Ink;
+  color?: string;
+  labelledby: string;
+}
+const { id, surface, color, labelledby } = Astro.props;
+---
+
+<section
+  class="section wrapper"
+  id={id}
+  data-section
+  data-surface={surface}
+  aria-labelledby={labelledby}
+  style={color ? `--section-bg: ${color}` : undefined}
+>
+  <div class="section__inner reveal">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    --section-bg: var(--color-paper);
+    position: relative;
+    min-block-size: 100svh;
+    align-content: center;
+    padding-block: var(--space-3xl) var(--space-2xl);
+    background: var(--section-bg);
+    color: var(--section-ink);
+    scroll-snap-align: start;
+  }
+  .section[data-surface="paper"] { --section-ink: var(--color-text); }
+  .section[data-surface="dark"] { --section-ink: var(--ink-dark); }
+  .section[data-surface="light"] { --section-ink: var(--ink-light); }
+
+  /* Schuine bovenrand: driehoek in de eigen kleur over de onderkant van de vorige sectie. */
+  .section + .section::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc(var(--slant) * -1 + 1px);
+    block-size: var(--slant);
+    background: var(--section-bg);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    pointer-events: none;
+    --slant: 7vw; /* ≈ tan(4°) × 100vw */
+  }
+
+  @media (min-width: 62em) {
+    .section { --content-max: clamp(24rem, 42vw, 40rem); }
+  }
+
+  /* Inkomen van de inhoud. Alleen met JavaScript (anders blijft alles zichtbaar) en als beweging mag. */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      translate: 0 2rem;
+      transition: opacity 0.6s var(--ease-out) 0.1s, translate 0.6s var(--ease-out) 0.1s;
+    }
+    .section.is-visible .reveal { opacity: 1; translate: 0 0; }
+  }
+</style>

@@ -1,0 +1,13 @@
+<!-- Favicon: de "n" uit het Neo-logo met het merkverloop. In dark mode iets lichter. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 44.4 45.1">
+  <style>
+    .a { stop-color: #6ec3cc; } .b { stop-color: #f29e83; }
+    @media (prefers-color-scheme: dark) { .a { stop-color: #8fd6dd; } .b { stop-color: #f7b8a3; } }
+  </style>
+  <defs>
+    <linearGradient id="g" x1="0.2" y1="0.2" x2="1" y2="1">
+      <stop offset="0.55" class="a" /><stop offset="1" class="b" />
+    </linearGradient>
+  </defs>
+  <path fill="url(#g)" d="M26.474 0c9.219 0 15.863 6.739 15.863 18.731V43.11H28.95V19.622c0-4.756-2.28-7.432-7.038-7.432-5.355 0-8.527 2.973-8.527 8.325v22.594H0V.893h13.386l-.298 6.936C15.666 2.775 20.624 0 26.474 0z" />
+</svg>

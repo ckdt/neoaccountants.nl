@@ -1,0 +1,56 @@
+html {
+  font-family: var(--font-body);
+  font-size: 100%;
+  line-height: 1.5;
+  background: var(--color-paper);
+  color: var(--color-text);
+  overflow-x: clip;
+}
+
+body {
+  font-size: var(--step-0);
+  background: var(--color-paper);
+  color: var(--color-text);
+  overflow-x: clip;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection { background: var(--brand-1); color: var(--ink-dark); }
+
+.prose { max-inline-size: var(--measure); }
+
+.visually-hidden:not(:focus):not(:active) {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  inset-block-start: var(--space-xs);
+  inset-inline-start: var(--space-xs);
+  z-index: 1001;
+  padding: var(--space-2xs) var(--space-s);
+  background: var(--ink-dark);
+  color: var(--ink-light);
+  border-radius: var(--radius);
+}
+

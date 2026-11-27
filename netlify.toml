@@ -1,0 +1,51 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  # Geen build bij alleen documentatie. Let op: content staat óók in .md (src/content/),
+  # daarom alleen de docs in de root uitsluiten, niet alle *.md (afwijking van DEPLOY.md).
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)README.md' ':(exclude)CHANGELOG.md' ':(exclude)AGENTS.md' ':(exclude)CLAUDE.md' ':(exclude).github/' ':(exclude).vscode/'"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Oude WordPress-URL's (WPML ?lang=) naar de nieuwe structuur.
+[[redirects]]
+  from = "/"
+  query = { lang = "en" }
+  to = "/en/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/site/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/wp-content/uploads/2018/02/Algemene-voorwaarden-NL-v201709.pdf"
+  to = "/documenten/algemene-voorwaarden.pdf"
+  status = 301
+[[redirects]]
+  from = "/wp-content/uploads/2018/02/Neo-Disclaimer-website.pdf"
+  to = "/documenten/disclaimer.pdf"
+  status = 301
+[[redirects]]
+  from = "/wp-content/uploads/2018/02/Neo-Databescherming.pdf"
+  to = "/documenten/databescherming.pdf"
+  status = 301
+[[redirects]]
+  from = "/wp-content/uploads/2018/02/Neo-Klachtenregeling.pdf"
+  to = "/documenten/klachtenregeling.pdf"
+  status = 301
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

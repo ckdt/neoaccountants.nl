@@ -1,0 +1,111 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "./Section.astro";
+import SiteNav from "./SiteNav.astro";
+import Logo from "./Logo.astro";
+import { settings } from "../data/settings";
+import { homePath, ui, type Lang } from "../i18n/ui";
+import { getContact, getHome, getServices } from "../lib/content";
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const home = await getHome(lang);
+const services = await getServices(lang);
+const contact = await getContact(lang);
+const navItems = [...services.map(({ anchor, title }) => ({ anchor, title })), { anchor: contact.anchor, title: contact.title }];
+const a = settings.address;
+---
+
+<BaseLayout lang={lang} title={home.title} description={home.description} alternates={homePath}>
+  <Logo slot="header" href="#top" label={t.logo} />
+  <SiteNav slot="header" lang={lang} items={navItems} />
+
+  <Section id="top" surface="paper" labelledby="title-top">
+    <div class="intro flow">
+      <h1 id="title-top" class="tagline">
+        <span class="visually-hidden">{settings.siteName}: </span>{home.tagline}
+      </h1>
+      <div class="prose flow"><home.Content /></div>
+    </div>
+  </Section>
+
+  {
+    services.map((s) => (
+      <Section id={s.anchor} surface={s.ink} color={s.color} labelledby={`title-${s.anchor}`}>
+        <div class="service flow">
+          <h2 id={`title-${s.anchor}`} class="service__title">{s.title}</h2>
+          <div class="prose flow"><s.Content /></div>
+        </div>
+      </Section>
+    ))
+  }
+
+  <Section id={contact.anchor} surface="paper" labelledby="title-contact">
+    <div class="contact flow">
+      <h2 id="title-contact" class="tagline">{contact.title}</h2>
+      <address class="flow">
+        <p>{a.street}<br />{a.postalCode} {a.city}</p>
+        <p>
+          <span class="visually-hidden">{t.email}: </span><a href={`mailto:${settings.email}`}>{settings.email}</a><br />
+          <span class="visually-hidden">{t.phone}: </span><a href={settings.telephoneHref}>{settings.telephone}</a>
+        </p>
+      </address>
+      <p>{contact.kvkLabel} {settings.kvk}</p>
+
+      <h3 class="visually-hidden">{contact.documentsLabel}</h3>
+      {contact.documentsNote && <p class="note">{contact.documentsNote}</p>}
+      <ul role="list" class="documents">
+        {
+          contact.documents.map((d) => (
+            <li>
+              <a class="button" href={d.href} hreflang="nl" type="application/pdf">
+                {d.label}
+                <span class="visually-hidden"> (PDF, {d.size})</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .tagline {
+    font-weight: 200;
+    font-size: var(--step-3);
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+  }
+  .intro { --flow-space: var(--space-m); }
+  .intro .prose,
+  .contact { font-size: var(--step--1); }
+  .prose :global(em) { font-style: italic; }
+
+  .service { --flow-space: var(--space-s); }
+  .service__title { font-size: var(--step-4); letter-spacing: -0.035em; }
+
+  address { font-style: normal; }
+  .contact { --flow-space: var(--space-s); }
+  .note { color: var(--color-muted); }
+
+  .documents {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    max-inline-size: 22rem;
+  }
+  .documents li { flex: 1 1 10rem; }
+  .button {
+    display: block;
+    padding: var(--space-3xs) var(--space-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .button:hover { border-color: currentColor; }
+</style>

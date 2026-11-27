@@ -1,0 +1,36 @@
+// Fluid type- en space-schaal via Utopia (utopia.fyi). 320 → 1440px.
+@use "utopia-core-scss/src/utopia" as utopia;
+
+:root {
+  @include utopia.generateTypeScale((
+    "minWidth": 320,
+    "maxWidth": 1440,
+    "minFontSize": 17,
+    "maxFontSize": 20,
+    "minTypeScale": 1.2,
+    "maxTypeScale": 1.333,
+    "positiveSteps": 5,
+    "negativeSteps": 2,
+  ));
+
+  @include utopia.generateSpaceScale((
+    "minWidth": 320,
+    "maxWidth": 1440,
+    "minSize": 17,
+    "maxSize": 20,
+    "positiveSteps": (1.5, 2, 3, 4, 6),
+    "negativeSteps": (0.75, 0.5, 0.25),
+    "customSizes": ("s-l", "m-2xl"),
+  ));
+
+  --font-body: "Karla", system-ui, sans-serif;
+  --font-display: "Poppins", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  --measure: 60ch;
+  --gutter: var(--space-s-l);
+  --radius: 4px;
+  --skew: -4deg;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}

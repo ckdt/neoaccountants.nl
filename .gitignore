@@ -1,0 +1,10 @@
+dist/
+.astro/
+node_modules/
+.netlify/
+.env
+.env.*
+!.env.example
+.DS_Store
+npm-debug.log*
+.claude/settings.local.json
