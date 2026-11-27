@@ -7,6 +7,8 @@ Categorieën: **Toegevoegd**, **Gewijzigd**, **Opgelost**, **Verwijderd**, **Bev
 
 ## [Unreleased]
 
+## [2026-11-27]
+
 ### Toegevoegd
 - Hoofdadres wordt www.neoaccounting.nl. neoaccounting.nl, neoaccountants.nl, neoaa.nl, neoadviseurs.nl en neofinance.nl (ook met www) sturen er met een 301 naartoe, met SSL via Netlify. Mailrecords van alle domeinen blijven bij Strato.
 - Live via Netlify met Let's Encrypt-certificaat; DNS bij Strato (alleen A en `www` naar Netlify), mailrecords ongewijzigd.
