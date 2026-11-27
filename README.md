@@ -1,4 +1,4 @@
-# neoaccountants.nl
+# www.neoaccounting.nl
 
 > Tweetalige one-pager (NL/EN) voor Neo Accountants & Adviseurs in Rotterdam: diensten en contact. Overgezet van WordPress (Strato) naar een statische Astro-site op Netlify, content in markdown.
 
@@ -6,9 +6,9 @@
 |---|---|
 | **Klant** | Neo Accountants & Adviseurs (TODO contactpersoon) |
 | **Bedrijf** | CKDT |
-| **Status** | WIP · statische versie op Netlify, domein nog niet omgezet |
+| **Status** | Live (sinds 2026-11-27) |
 | **SLA** | TODO |
-| **Live** | https://neoaccountants.netlify.app · domein https://neoaccountants.nl nog niet gekoppeld (staat op "Domain reserved" bij Strato) · oud: http://58606140.swh.strato-hosting.eu/site/ |
+| **Live** | https://www.neoaccounting.nl · alle andere Neo-domeinen sturen hierheen (zie *Domein en DNS*) · oud: http://58606140.swh.strato-hosting.eu/site/ |
 | **Netlify** | team ckdt, site [`neoaccountants`](https://app.netlify.com/projects/neoaccountants) · staging: https://staging--neoaccountants.netlify.app |
 | **CMS** | Geen (markdown in `src/content/`). Later eventueel Sanity, zie hieronder |
 | **Repo** | [github.com/ckdt/neoaccountants.nl](https://github.com/ckdt/neoaccountants.nl) (public) |
@@ -73,6 +73,13 @@ public/documenten/             Algemene voorwaarden, disclaimer, databescherming
 
 - `main` → productie · `staging` → `staging--<site>.netlify.app` · pull requests → deploy preview. Zie `~/Code/_standards/DEPLOY.md`.
 - `netlify.toml`: build, Node 22, redirects van oude WordPress-URL's (`?lang=en`, `/site/*`, PDF's), cache-headers. De `ignore`-regel sluit alleen de docs in de root uit, want de content is ook `.md`.
+
+## Domein en DNS
+
+- **Hoofdadres: `www.neoaccounting.nl`.** Doorverwijzend (301, pad blijft behouden, regels in `netlify.toml`): neoaccounting.nl, neoaccountants.nl, neoaa.nl, neoadviseurs.nl, neofinance.nl, elk ook met `www`. Allemaal als alias gekoppeld aan de Netlify-site, zodat het certificaat ze dekt.
+- Domeinen en DNS bij Strato. Alleen het web wijst naar Netlify: `A` → `75.2.60.5` ("eigen IP-adres"; daarmee verdwijnt ook de standaard-AAAA van Strato), `www` → CNAME naar Netlify of naar het hoofddomein.
+- SSL: Let's Encrypt via Netlify, automatisch verlengd. Niets meer bij Strato.
+- **Mail blijft bij Strato**, voor alle domeinen (neoaccounting.nl heeft actieve mailboxen). Niet aanraken: MX (`5 smtp.rzone.de`), DKIM (`strato-dkim-0002._domainkey`), DMARC (`p=reject`), `autoconfig` en `_autodiscover._tcp`. Verhuist de DNS ooit naar Netlify, neem deze dan exact over: met `p=reject` wordt mail zonder geldige DKIM geweigerd.
 
 ## Bekende issues en afspraken
 
