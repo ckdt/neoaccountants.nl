@@ -8,6 +8,99 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Alle andere Neo-domeinen (DNS bij Strato, als alias aan deze site gekoppeld) → hoofdadres
+# www.neoaccounting.nl. Host-specifiek en met force, zodat elk pad op het juiste adres uitkomt.
+[[redirects]]
+  from = "https://neoaccounting.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://neoaccounting.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://neoaccountants.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://neoaccountants.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.neoaccountants.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://www.neoaccountants.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://neoaa.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://neoaa.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.neoaa.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://www.neoaa.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://neoadviseurs.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://neoadviseurs.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.neoadviseurs.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://www.neoadviseurs.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://neofinance.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://neofinance.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.neofinance.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://www.neofinance.nl/*"
+  to = "https://www.neoaccounting.nl/:splat"
+  status = 301
+  force = true
+
 # Oude WordPress-URL's (WPML ?lang=) naar de nieuwe structuur.
 [[redirects]]
   from = "/"
