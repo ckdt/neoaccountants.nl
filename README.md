@@ -6,12 +6,12 @@
 |---|---|
 | **Klant** | Neo Accountants & Adviseurs (TODO contactpersoon) |
 | **Bedrijf** | CKDT |
-| **Status** | WIP · statische versie klaar, nog niet live |
+| **Status** | WIP · statische versie op Netlify, domein nog niet omgezet |
 | **SLA** | TODO |
-| **Live** | https://neoaccountants.nl (TODO: domein staat nog op "Domain reserved" bij Strato) · oud: http://58606140.swh.strato-hosting.eu/site/ |
-| **Netlify** | team ckdt, site TODO |
+| **Live** | https://neoaccountants.netlify.app · domein https://neoaccountants.nl nog niet gekoppeld (staat op "Domain reserved" bij Strato) · oud: http://58606140.swh.strato-hosting.eu/site/ |
+| **Netlify** | team ckdt, site [`neoaccountants`](https://app.netlify.com/projects/neoaccountants) · staging: https://staging--neoaccountants.netlify.app |
 | **CMS** | Geen (markdown in `src/content/`). Later eventueel Sanity, zie hieronder |
-| **Repo** | TODO (github.com/ckdt/neoaccountants.nl) |
+| **Repo** | [github.com/ckdt/neoaccountants.nl](https://github.com/ckdt/neoaccountants.nl) (public) |
 | **Notion** | TODO |
 
 ## Stack
