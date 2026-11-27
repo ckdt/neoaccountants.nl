@@ -6,9 +6,9 @@
 |---|---|
 | **Klant** | Neo Accountants & Adviseurs (TODO contactpersoon) |
 | **Bedrijf** | CKDT |
-| **Status** | WIP · statische versie op Netlify, domein nog niet omgezet |
+| **Status** | Live (sinds 2026-11-27) |
 | **SLA** | TODO |
-| **Live** | https://neoaccountants.netlify.app · domein https://neoaccountants.nl nog niet gekoppeld (staat op "Domain reserved" bij Strato) · oud: http://58606140.swh.strato-hosting.eu/site/ |
+| **Live** | https://neoaccountants.nl (www → hoofddomein) · oud: http://58606140.swh.strato-hosting.eu/site/ |
 | **Netlify** | team ckdt, site [`neoaccountants`](https://app.netlify.com/projects/neoaccountants) · staging: https://staging--neoaccountants.netlify.app |
 | **CMS** | Geen (markdown in `src/content/`). Later eventueel Sanity, zie hieronder |
 | **Repo** | [github.com/ckdt/neoaccountants.nl](https://github.com/ckdt/neoaccountants.nl) (public) |
@@ -73,6 +73,12 @@ public/documenten/             Algemene voorwaarden, disclaimer, databescherming
 
 - `main` → productie · `staging` → `staging--<site>.netlify.app` · pull requests → deploy preview. Zie `~/Code/_standards/DEPLOY.md`.
 - `netlify.toml`: build, Node 22, redirects van oude WordPress-URL's (`?lang=en`, `/site/*`, PDF's), cache-headers. De `ignore`-regel sluit alleen de docs in de root uit, want de content is ook `.md`.
+
+## Domein en DNS
+
+- Domein en DNS bij Strato. Alleen het web wijst naar Netlify: `A` → `75.2.60.5`, `www` → `CNAME neoaccountants.netlify.app`, AAAA uit ("eigen IP-adres", leeg).
+- SSL: Let's Encrypt via Netlify, automatisch verlengd. Niets meer bij Strato.
+- **Mail blijft bij Strato.** Niet aanraken: MX (`5 smtp.rzone.de`), DKIM (`strato-dkim-0002._domainkey`), DMARC (`p=reject`), `autoconfig` en `_autodiscover._tcp`. Verhuist de DNS ooit naar Netlify, neem deze dan exact over: met `p=reject` wordt mail zonder geldige DKIM geweigerd.
 
 ## Bekende issues en afspraken
 

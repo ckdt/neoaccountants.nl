@@ -8,6 +8,7 @@ Categorieën: **Toegevoegd**, **Gewijzigd**, **Opgelost**, **Verwijderd**, **Bev
 ## [Unreleased]
 
 ### Toegevoegd
+- Live op https://neoaccountants.nl: A-record en `www` bij Strato naar Netlify, Let's Encrypt-certificaat via Netlify, mailrecords ongewijzigd bij Strato.
 - GitHub-repo `ckdt/neoaccountants.nl` (public) met `staging` als standaardbranch en branch protection op `main` en `staging`; Netlify-site `neoaccountants` (team ckdt) met branch deploys voor `staging`.
 - Statische Astro 7-site als vervanging van de WordPress-site (thema neo3000, WPML): één pagina in het Nederlands (`/`) en Engels (`/en/`).
 - Content in markdown (`src/content/`), taalonafhankelijke gegevens in `src/data/settings.ts`.
