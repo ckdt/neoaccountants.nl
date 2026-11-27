@@ -1,4 +1,4 @@
-# AGENTS.md: neoaccountants.nl
+# AGENTS.md: www.neoaccounting.nl
 
 Instructies voor AI-agents (Claude Code, Cursor, Codex) en ontwikkelaars die aan dit project werken.
 Lees eerst `README.md` voor context en `CHANGELOG.md` voor recente wijzigingen.
