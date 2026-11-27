@@ -8,6 +8,7 @@ Categorieën: **Toegevoegd**, **Gewijzigd**, **Opgelost**, **Verwijderd**, **Bev
 ## [Unreleased]
 
 ### Toegevoegd
+- Doorverwijzing van neoaa.nl, neoaccounting.nl, neoadviseurs.nl en neofinance.nl (en www) naar neoaccountants.nl, met SSL via Netlify. Mailrecords van die domeinen blijven bij Strato.
 - GitHub-repo `ckdt/neoaccountants.nl` (public) met `staging` als standaardbranch en branch protection op `main` en `staging`; Netlify-site `neoaccountants` (team ckdt) met branch deploys voor `staging`.
 - Statische Astro 7-site als vervanging van de WordPress-site (thema neo3000, WPML): één pagina in het Nederlands (`/`) en Engels (`/en/`).
 - Content in markdown (`src/content/`), taalonafhankelijke gegevens in `src/data/settings.ts`.
